@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Cheat_Launcher.Components.Header"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="70" Width="800">
+    <Grid Background="Black">
+        <!-- Левая часть -->
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+            <Image Source="pack://application:,,,/Resources/dashboard-logo.png" Height="43" Width="51"/>
+            <TextBlock Text="DOLOS" FontSize="20" Foreground="White" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Правая часть -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+            <Image Source="pack://application:,,,/Resources/telegram-logo.png" Width="22" Cursor="Hand" MouseDown="OpenTelegram" Margin="0,0,5,0"/>
+            <Image Source="pack://application:,,,/Resources/vk-logo.png" Width="30" Cursor="Hand" MouseDown="OpenVK"/>
+            <Image Source="pack://application:,,,/Resources/discord-logo.png" Width="30" Cursor="Hand" MouseDown="OpenDiscord"/>
+            <Image Source="pack://application:,,,/Resources/settings-logo.png" Width="30" Cursor="Hand" MouseDown="ToggleSettings" Height="22"/>
+        </StackPanel>
+
+        <Border Height="2" Background="Red" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+    </Grid>
+</UserControl>

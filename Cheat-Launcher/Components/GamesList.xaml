@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Cheat_Launcher.Components.GamesList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="490" Width="276">
+    <Grid Background="Transparent">
+        <!-- Блок с играми (с правой красной полоской) -->
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ListBox x:Name="GamesListBox" SelectionChanged="GamesListBox_SelectionChanged"
+                     Background="Transparent" BorderBrush="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" Height="78" VerticalAlignment="Center" Margin="5">
+                                <!-- Убираем Border вокруг изображения -->
+                                <Image Width="73" Height="36" Source="{Binding Photo.Path}" />
+                                <StackPanel Orientation="Vertical" Margin="5,15,0,0">
+                                    <!-- Название игры чуть ниже -->
+                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,5,0,0"/>
+
+                                    <!-- Статус с добавленным "Статус:" -->
+                                    <TextBlock FontSize="12" Margin="0,5,0,0">
+                                        <Run Text="Статус: " Foreground="White" />
+                                        <Run Text="{Binding Status}" FontWeight="Bold">
+                                            <Run.Style>
+                                                <Style TargetType="Run">
+                                                    <Style.Triggers>
+                                                        <!-- Статус "Работает" - зеленый -->
+                                                        <DataTrigger Binding="{Binding Status}" Value="Работает">
+                                                            <Setter Property="Foreground" Value="Green"/>
+                                                        </DataTrigger>
+
+                                                        <!-- Статус "Не активировано" или "Отключен" - красный -->
+                                                        <DataTrigger Binding="{Binding Status}" Value="Не активировано">
+                                                            <Setter Property="Foreground" Value="Red"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Отключен">
+                                                            <Setter Property="Foreground" Value="Red"/>
+                                                        </DataTrigger>
+
+                                                        <!-- Статус "На обновлении" - желтый -->
+                                                        <DataTrigger Binding="{Binding Status}" Value="На обновлении">
+                                                            <Setter Property="Foreground" Value="Yellow"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Run.Style>
+                                        </Run>
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Красная полоска снизу для каждой игры (до конца) -->
+                            <Border Height="1" Background="Red" Margin="0,0,0,0" Width="260" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+
+        <!-- Правая красная полоска вокруг блока с играми -->
+        <Border BorderBrush="Red" BorderThickness="0,0,1,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <RootNamespace>Cheat_Launcher</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\dashboard-logo.png" />
+    <None Remove="Resources\discord-logo.png" />
+    <None Remove="Resources\red-profile.png" />
+    <None Remove="Resources\settings-image.png" />
+    <None Remove="Resources\settings-logo.png" />
+    <None Remove="Resources\settings-logo.svg" />
+    <None Remove="Resources\telegram-logo.png" />
+    <None Remove="Resources\vk-logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Renderer\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+    <PackageReference Include="System.Management" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\dashboard-logo.png" />
+    <Resource Include="Resources\discord-logo.png" />
+    <Resource Include="Resources\logo.ico" />
+    <Resource Include="Resources\red-profile.png" />
+    <Resource Include="Resources\settings-image.png" />
+    <Resource Include="Resources\settings-logo.png" />
+    <Resource Include="Resources\settings-logo.svg" />
+    <Resource Include="Resources\telegram-logo.png" />
+    <Resource Include="Resources\vk-logo.png" />
+  </ItemGroup>
+
+    <ItemGroup>
+	    <None Update="appsettings.json">
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    </None>
+    </ItemGroup>
+
+</Project>

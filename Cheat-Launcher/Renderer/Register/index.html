@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+    
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+    
+        .register-page__container {
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background: url("./authBackground.png") center;
+        }
+    
+        .register-page__input {
+            width: 167px;
+            height: 24px;
+            color: #6A6A6A;
+            background: #3A3737;
+            padding-left: 5px;
+            padding-right: 5px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+            font-size: 10px;
+        }
+    
+        .register-page__login_button {
+            width: 110px;
+            height: 25px;
+            background: #9D1A1A;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            color: #FFFFFF;
+            position: absolute;
+            top: 253px; /* Уменьшено на 10px */
+            right: 85px;
+            font-size: 10px;
+        }
+    
+        .register-page__login_button:hover {
+            background: #a72424;
+            cursor: pointer;
+        }
+    
+        .register-page__login_button:active {
+            background: #bb3838;
+        }
+    
+        .register-page__login_button:disabled {
+            opacity: 0.5;
+        }
+    
+        .register-page__login_flow {
+            position: absolute;
+            top: 280px; /* Уменьшено на 10px */
+            font-size: 11px;
+            left: 95px;
+            cursor: pointer;
+        }
+    
+        .register-page__login_flow:active {
+            color: #FFFFFF;
+        }
+    
+        .register-page__logo {
+            position: absolute;
+            right: 0;
+        }
+    
+        .register-page__text_under_logo {
+            position: absolute;
+            font-size: 14px;
+            top: 116px; /* Уменьшено на 10px */
+            right: 112px;
+        }
+
+        .error {
+            position: absolute;
+            top: 300px; /* Расположите рядом с кнопкой */
+            left: 60px; /* Отступ слева */
+            color: red;
+            font-size: 12px;
+            display: none; /* Скрыто по умолчанию */
+        }
+    </style>
+    
+</head>
+<body>
+    <main class="register-page__container">
+        <img class="register-page__logo" alt="logo" src="logo.svg" />
+        <p class="register-page__text_under_logo">DOLOS</p>
+        <input
+            name="email"
+            type="text"
+            value=""
+            onchange="handleInputChange(event)"
+            class="register-page__input"
+            placeholder="Почта"
+            style="top: 132px; right: 56px;">
+        <input
+            name="username"
+            type="text"
+            value=""
+            onchange="handleInputChange(event)"
+            class="register-page__input"
+            placeholder="Никнейм"
+            style="top: 161px; right: 56px;">
+        <input
+            name="password"
+            type="password"
+            value=""
+            class="register-page__input"
+            placeholder="Пароль"
+            style="top: 190px; right: 56px;">
+        <input
+            name="confirmPassword"
+            type="password"
+            value=""
+            class="register-page__input"
+            placeholder="Подтверждение пароля"
+            style="top: 219px; right: 56px;">
+        <button class="register-page__login_button" onclick="handleRegisterButton()">
+            Зарегистрироваться
+        </button>
+        <span onclick="handleLoginNavigate()" class="register-page__login_flow">
+            Авторизоваться?
+        </span>
+        <div id="error-message" class="error">
+            Ошибка
+        </div>
+    </main>
+    <script>
+        window.chrome.webview.addEventListener("message", function(event) {
+            const data = JSON.parse(event.data);
+
+            if (data.type === "authError") {
+                showError(data.message)
+            }
+        });
+
+        function handleRegisterButton() {
+            clearError()
+            const email = document.querySelector('input[name="email"]').value;
+            const username = document.querySelector('input[name="username"]').value;
+            const password = document.querySelector('input[name="password"]').value;
+            const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
+
+            if (password !== confirmPassword) {
+                showError('Пароли не совпадают')
+                return;
+            }
+
+            // Отправляем данные на C#
+            window.chrome.webview.postMessage(JSON.stringify({
+                type: "register",
+                email: email,
+                username: username,
+                password: password
+            }));
+        }
+
+        function handleLoginNavigate() {
+            window.chrome.webview.postMessage(JSON.stringify({
+                type: "navigateToLogin",
+            }));
+        }
+
+        function showError(message) {
+            const errorElement = document.getElementById("error-message");
+            errorElement.textContent = message; // Установить текст ошибки
+            errorElement.style.display = "block"; // Показать ошибку
+        }
+
+        function clearError() {
+            const errorElement = document.getElementById("error-message");
+            errorElement.textContent = ""; // Очистить текст ошибки
+            errorElement.style.display = "none"; // Скрыть ошибку
+        }
+    </script>
+</body>
+</html>
