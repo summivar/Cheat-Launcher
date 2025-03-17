@@ -21,15 +21,16 @@ namespace Cheat_Launcher.Components
     /// </summary>
     public partial class GameInfo : UserControl
     {
-        public FindGameResponseDto SelectedGame { get; set; }
+        public FindGameResponseDto? SelectedGame { get; set; }
 
         public GameInfo()
         {
             InitializeComponent();
         }
 
-        public void UpdateGameInfo(FindGameResponseDto game)
+        public void UpdateGameInfo(FindGameResponseDto? game)
         {
+            SelectedGame = game;
             if (game != null)
             {
                 GameDescriptionTextBlock.Text = game.Description; // Привязываем описание игры

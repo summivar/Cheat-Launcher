@@ -5,6 +5,7 @@ using Cheat_Launcher.Data.SecureStorage;
 using Cheat_Launcher.Dtos.Responses.Games;
 using Cheat_Launcher.Services;
 
+
 namespace Cheat_Launcher.Windows
 {
     public partial class MainWindow : Window
@@ -12,7 +13,7 @@ namespace Cheat_Launcher.Windows
         private GamesService _gamesService;
         private KeyService _keyService;
         private ISecureStorage _secureStorage;
-        private string Username { get; set; } = "User";
+        private readonly Timer _updateTimer;
         public List<FindGameResponseDto> Games { get; set; } = [];
         public FindGameResponseDto SelectedGame { get; set; }
 
@@ -29,9 +30,13 @@ namespace Cheat_Launcher.Windows
             headerControl.SettingsToggled += HeaderControl_SettingsToggled;
             HeaderContainer.Children.Add(headerControl);
 
-            Username = _secureStorage.Load(KeyConstants.UserName);
-
             LoadGamesAsync();
+
+            _updateTimer = new Timer(async _ =>
+                await Dispatcher.InvokeAsync(LoadGamesAsync),
+                null,
+                TimeSpan.Zero,
+                TimeSpan.FromSeconds(10));
         }
 
         private async void LoadGamesAsync()
@@ -39,15 +44,20 @@ namespace Cheat_Launcher.Windows
             try
             {
                 Games = await _gamesService.FindGames();
-                if (Games.Count > 0)
+                if (SelectedGame == null && Games.Count > 0)
                 {
                     SelectedGame = Games[0];
+                }
+                else if (SelectedGame != null)
+                {
+                    SelectedGame = Games.FirstOrDefault(g => g.Id == SelectedGame.Id) ?? SelectedGame;
                 }
 
                 DisplayGameInfo(SelectedGame);
 
                 var gamesListControl = new GamesList(Games, SelectedGame);
                 gamesListControl.GameSelected += GamesListControl_GameSelected;
+                GamesListContainer.Children.Clear();
                 GamesListContainer.Children.Add(gamesListControl);
             }
             catch (Exception ex)
@@ -56,11 +66,11 @@ namespace Cheat_Launcher.Windows
             }
         }
 
-        private void DisplayGameInfo(FindGameResponseDto game)
+        private void DisplayGameInfo(FindGameResponseDto? game)
         {
             if (OpenSettings)
             {
-                var settingsControl = new Settings(Username);
+                var settingsControl = new Settings(_secureStorage);
                 settingsControl.KeyEntered += Settings_KeyEntered;
 
                 MainContainer.Children.Clear();
@@ -102,7 +112,7 @@ namespace Cheat_Launcher.Windows
         private async Task ReloadGamesAsync()
         {
             Games = await _gamesService.FindGames();
-            if (Games.Count > 0)
+            if (SelectedGame == null && Games.Count > 0)
             {
                 SelectedGame = Games[0];
             }
@@ -113,6 +123,12 @@ namespace Cheat_Launcher.Windows
             var gamesListControl = new GamesList(Games, SelectedGame);
             gamesListControl.GameSelected += GamesListControl_GameSelected;
             GamesListContainer.Children.Add(gamesListControl);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            _updateTimer.Dispose();
         }
     }
 }

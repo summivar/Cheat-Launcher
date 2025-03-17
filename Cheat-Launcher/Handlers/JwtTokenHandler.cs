@@ -18,7 +18,7 @@ public class JwtTokenHandler : DelegatingHandler
     {
         try
         {
-            var jwtToken = _secureStorage.Load(KeyConstants.JwtToken);
+            var jwtToken = _secureStorage.Load<string>(KeyConstants.JwtToken);
             if (!string.IsNullOrEmpty(jwtToken))
             {
                 request.Headers.Authorization =

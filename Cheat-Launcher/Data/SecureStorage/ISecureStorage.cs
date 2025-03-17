@@ -2,7 +2,7 @@
 
 public interface ISecureStorage
 {
-    void Save(string key, string value);
-    string Load(string key);
+    void Save<T>(string key, T value);
+    T? Load<T>(string key);
     void Delete(string key);
 }

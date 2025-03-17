@@ -42,8 +42,8 @@
                     <Button Click="EnterKeyButton_Click" x:Name="EnterKeyButton" Content="Ввести код" Width="85" Height="25" Background="#990B0B" Foreground="#D3D1D1" HorizontalAlignment="Right" Margin="0,0,0,0"/>
                 </StackPanel>
 
-              
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10">
+
+                <StackPanel x:Name="CheatVersionPanel" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10">
                     <!-- Cheat Version -->
                     <TextBlock Text="Версия чита" VerticalAlignment="Center" Foreground="#D3D1D1" FontSize="14"/>
 
@@ -52,6 +52,10 @@
                     <Button Content="Тестовая" Width="85" Height="25" Background="#990B0B" Foreground="#D3D1D1" HorizontalAlignment="Left" Margin="15,0,0,0"/>
                 </StackPanel>
 
+            </StackPanel>
+
+            <StackPanel x:Name="LogoutPanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10">
+                <Button Click="LogoutButton_Click" Content="Выйти из аккаунта" Width="120" Height="30" Background="#990B0B" Foreground="#D3D1D1"/>
             </StackPanel>
         </Grid>
     </Grid>

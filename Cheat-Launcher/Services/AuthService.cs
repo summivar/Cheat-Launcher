@@ -55,7 +55,7 @@ public class AuthService
         }
 
         _secureStorage.Save(KeyConstants.JwtToken, response.Data!.Token);
-        _secureStorage.Save(KeyConstants.UserName, response.Data!.User!.Username);
+        _secureStorage.Save(KeyConstants.User, response.Data!.User!);
 
         return new AuthResponse(true, "Authentication success");
     }
@@ -83,7 +83,7 @@ public class AuthService
         }
 
         _secureStorage.Save(KeyConstants.JwtToken, response.Data!.Token);
-        _secureStorage.Save(KeyConstants.UserName, response.Data!.User!.Username);
+        _secureStorage.Save(KeyConstants.User, response.Data!.User!);
 
         return new AuthResponse(true, "Authentication success");
     }

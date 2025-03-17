@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 namespace Cheat_Launcher.Data.SecureStorage;
 
@@ -16,17 +17,18 @@ public class DpapiSecureStorage : ISecureStorage
         }
     }
 
-    public void Save(string key, string value)
+    public void Save<T>(string key, T value)
     {
+        var json = JsonConvert.SerializeObject(value);
         var filePath = GetFilePath(key);
         var encryptedData = ProtectedData.Protect(
-            System.Text.Encoding.UTF8.GetBytes(value),
+            System.Text.Encoding.UTF8.GetBytes(json),
             null,
             DataProtectionScope.CurrentUser);
         File.WriteAllBytes(filePath, encryptedData);
     }
 
-    public string Load(string key)
+    public T? Load<T>(string key)
     {
         var filePath = GetFilePath(key);
         if (!File.Exists(filePath)) throw new FileNotFoundException($"No data found for key: {key}");
@@ -36,7 +38,8 @@ public class DpapiSecureStorage : ISecureStorage
             encryptedData,
             null,
             DataProtectionScope.CurrentUser);
-        return System.Text.Encoding.UTF8.GetString(decryptedData);
+        var json = System.Text.Encoding.UTF8.GetString(decryptedData);
+        return JsonConvert.DeserializeObject<T>(json);
     }
 
     public void Delete(string key)

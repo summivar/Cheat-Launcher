@@ -74,6 +74,7 @@ namespace Cheat_Launcher
 
             services.AddSingleton<Header>();
             services.AddSingleton<GamesList>();
+            services.AddSingleton<Settings>();
 
             services.AddSingleton<AuthWindow>();
             services.AddSingleton<MainWindow>();
