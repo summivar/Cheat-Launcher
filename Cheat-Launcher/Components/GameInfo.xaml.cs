@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Cheat_Launcher.Dtos.Responses.Games;
+using Cheat_Launcher.Utils;
 using Cheat_Launcher.Windows;
 using Microsoft.Win32;
-using Reloaded.Injector;
 
 namespace Cheat_Launcher.Components
 {
@@ -41,9 +41,14 @@ namespace Cheat_Launcher.Components
 
             if (selectedProcess == null) return;
 
-            var injector = new Injector(selectedProcess);
 
-            injector.Inject(dllPath);
+            try {
+                Injector.Handle([selectedProcess.Id.ToString(), dllPath]);
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
         }
 
         private string OpenFileDialogForDll()
