@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Inter.ttf" />
     <None Remove="Resources\dashboard-logo.png" />
     <None Remove="Resources\discord-logo.png" />
     <None Remove="Resources\red-profile.png" />
@@ -37,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Inter.ttf" />
     <Resource Include="Resources\dashboard-logo.png" />
     <Resource Include="Resources\discord-logo.png" />
     <Resource Include="Resources\logo.ico" />
