@@ -62,7 +62,7 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1" Margin="10,0,0,10">
                             <Button x:Name="PayButton" Content="Оплатить" Width="100" Margin="0,0,16,0" 
                                     Style="{StaticResource RedButtonStyle}"/>
-                            <Button x:Name="LaunchButton" Content="Запустить" Width="100" Margin="16,0,0,0" 
+                            <Button Click="LaunchButton_Click" x:Name="LaunchButton" Content="Запустить" Width="100" Margin="16,0,0,0" 
                                     Style="{StaticResource RedButtonStyle}"/>
                         </StackPanel>
 

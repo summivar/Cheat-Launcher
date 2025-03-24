@@ -5,6 +5,16 @@
              Startup="Application_Startup"
              >
     <Application.Resources>
+        <FontFamily x:Key="InterFont">pack://application:,,,/Fonts/#Inter Thin</FontFamily>
 
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource InterFont}" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+
+        <Style TargetType="Control">
+            <Setter Property="FontFamily" Value="{StaticResource InterFont}" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
     </Application.Resources>
 </Application>

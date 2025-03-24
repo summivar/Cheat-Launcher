@@ -2,11 +2,37 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Height="490" Width="276">
+    
     <Grid Background="Transparent">
         <!-- Блок с играми (с правой красной полоской) -->
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <ListBox x:Name="GamesListBox" SelectionChanged="GamesListBox_SelectionChanged"
-                     Background="Transparent" BorderBrush="Transparent">
+                     Background="Transparent" BorderBrush="Transparent"
+                        BorderThickness="0" Padding="0">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <!-- Убираем стиль фокуса, который может создавать обводку -->
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Style.Triggers>
+                            <!-- Когда элемент выбран, убираем фон и обводку -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Trigger>
+                            <!-- Когда мышь наведена, убираем фон и обводку -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>

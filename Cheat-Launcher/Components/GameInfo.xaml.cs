@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Cheat_Launcher.Dtos.Responses.Games;
+using Cheat_Launcher.Windows;
+using Microsoft.Win32;
+using Reloaded.Injector;
 
 namespace Cheat_Launcher.Components
 {
@@ -36,6 +29,49 @@ namespace Cheat_Launcher.Components
                 GameDescriptionTextBlock.Text = game.Description; // Привязываем описание игры
                 GameImage.Source = new BitmapImage(new Uri(game.Photo.Path)); // Привязываем изображение игры
             }
+        }
+
+        private void LaunchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string dllPath = OpenFileDialogForDll();
+
+            if (string.IsNullOrEmpty(dllPath)) return;
+
+            Process selectedProcess = SelectProcess();
+
+            if (selectedProcess == null) return;
+
+            var injector = new Injector(selectedProcess);
+
+            injector.Inject(dllPath);
+        }
+
+        private string OpenFileDialogForDll()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "DLL files (*.dll)|*.dll|All files (*.*)|*.*";
+
+            bool? result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                return openFileDialog.FileName;
+            }
+
+            return null;
+        }
+
+        private Process SelectProcess()
+        {
+            Process[] processes = Process.GetProcesses();
+            ProcessWindow processWindow = new ProcessWindow(processes);
+
+            if (processWindow.ShowDialog() == true)
+            {
+                return processWindow.SelectedProcess;
+            }
+
+            return null;
         }
     }
 
