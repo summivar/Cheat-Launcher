@@ -10,11 +10,15 @@ namespace Cheat_Launcher.Windows
     {
         public Process SelectedProcess { get; private set; }
 
-        public ProcessWindow(Process[] processes)
+        public ProcessWindow()
         {
             InitializeComponent();
+            RefreshProcessList();
+        }
 
-            ProcessListBox.ItemsSource = processes;
+        private void RefreshProcessList()
+        {
+            ProcessListBox.ItemsSource = Process.GetProcesses().OrderBy(p => p.ProcessName);
         }
 
         private void SelectButton_Click(object sender, RoutedEventArgs e)
@@ -29,6 +33,11 @@ namespace Cheat_Launcher.Windows
             {
                 MessageBox.Show("Пожалуйста, выберите процесс.");
             }
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshProcessList();
         }
     }
 }

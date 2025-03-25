@@ -11,6 +11,14 @@
 
   <ItemGroup>
     <None Remove="Fonts\Inter.ttf" />
+    <None Remove="Injector.exe" />
+    <None Remove="Renderer\Login\close-button.svg" />
+    <None Remove="Renderer\Login\index.html" />
+    <None Remove="Renderer\Login\logo.svg" />
+    <None Remove="Renderer\Register\authBackground.png" />
+    <None Remove="Renderer\Register\close-button.svg" />
+    <None Remove="Renderer\Register\index.html" />
+    <None Remove="Renderer\Register\logo.svg" />
     <None Remove="Resources\dashboard-logo.png" />
     <None Remove="Resources\discord-logo.png" />
     <None Remove="Resources\red-profile.png" />
@@ -28,18 +36,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Reloaded.Injector" Version="1.2.5" />
+    <PackageReference Include="PortableCostura.Fody" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Resource.Embedder" Version="2.2.0" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
     <PackageReference Include="System.Management" Version="9.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Fonts\Inter.ttf" />
+    <Resource Include="injector.exe" />
     <Resource Include="Resources\dashboard-logo.png" />
     <Resource Include="Resources\discord-logo.png" />
     <Resource Include="Resources\logo.ico" />
@@ -57,4 +74,7 @@
 	    </None>
     </ItemGroup>
 
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\*.dll" />
+	</ItemGroup>
 </Project>

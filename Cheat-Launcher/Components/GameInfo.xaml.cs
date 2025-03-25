@@ -43,7 +43,7 @@ namespace Cheat_Launcher.Components
 
 
             try {
-                Injector.Handle([selectedProcess.Id.ToString(), dllPath]);
+                Injector.Inject(selectedProcess, dllPath);
             } catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
@@ -68,8 +68,7 @@ namespace Cheat_Launcher.Components
 
         private Process SelectProcess()
         {
-            Process[] processes = Process.GetProcesses();
-            ProcessWindow processWindow = new ProcessWindow(processes);
+            ProcessWindow processWindow = new ProcessWindow();
 
             if (processWindow.ShowDialog() == true)
             {
